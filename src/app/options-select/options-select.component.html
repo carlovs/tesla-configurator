@@ -1,0 +1,28 @@
+<h1>Step 2: Choose your config and options</h1>
+
+<div class="d-grid gap-2">
+  <div class="d-flex align-items-center gap-2">
+    <div>Config:</div>
+    <div>
+      <select id="configSelect">
+        <option>Model 3</option>
+      </select>
+    </div>
+  </div>
+  <div>{{ carModel?.description }}</div>
+  <div
+    *ngIf="availableOptions()?.towHitch"
+    class="d-flex align-items-center gap-2"
+  >
+    <div>Tow Hitch?</div>
+    <input type="checkbox" id="includeTow" />
+  </div>
+  <div *ngIf="availableOptions()?.code" class="d-flex align-items-center gap-2">
+    <div>Yoke Steering Wheel?</div>
+    <input type="checkbox" id="includeYoke" />
+  </div>
+</div>
+
+<div>
+  <app-car-display [car-model]="carModel"></app-car-display>
+</div>

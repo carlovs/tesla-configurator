@@ -1,0 +1,11 @@
+<div class="d-flex">
+  <div [routerLink]="['/']"
+       class="p-3 flex-fill border border-1 text-center"
+       style="cursor:pointer" id="step1">Step 1</div>
+  <div [routerLink]="['/configuration', selectedModel() ]"
+       class="p-3 flex-fill border border-1 text-center"
+       style="cursor:pointer" id="step2">Step 2</div>
+  <div [routerLink]="['/summary']"
+       class="p-3 flex-fill border border-1 text-center"
+       style="cursor:pointer" id="step3">Step 3</div>
+</div>
