@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ConfigurationNavComponent } from './configuration-nav/configuration-nav.component';
 import { RouterLink, RouterModule } from '@angular/router';
+import { ConfigurationService } from './services/configuration.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,11 @@ import { RouterLink, RouterModule } from '@angular/router';
     AsyncPipe,
     JsonPipe,
     HttpClientModule,
-    ConfigurationNavComponent,
     RouterLink,
     RouterModule,
+    ConfigurationNavComponent,
   ],
+  providers: [ConfigurationService],
   template: `
     <app-configuration-nav></app-configuration-nav>
     <div class="content">
@@ -28,12 +30,9 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     this.loadModels();
-
-    console.log('Hello from AppComponent');
   }
 
   async loadModels() {
     const models = await firstValueFrom(this.http.get('/models'));
-    console.log(models);
   }
 }

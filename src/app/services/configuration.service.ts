@@ -9,9 +9,7 @@ import {
 } from '../models/car-options.model';
 import { FormRecord } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ConfigurationService {
   private _selectedModel = signal<CarModel | null>(null);
   public selectedModel = this._selectedModel.asReadonly();
@@ -37,9 +35,12 @@ export class ConfigurationService {
   private _avaialableOptions = signal<CarOptions | null>(null);
   public availableOptions = this._avaialableOptions.asReadonly();
 
+  public hasTowHitch = signal<boolean>(false);
+  public hasYoke = signal<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
-  setModel(modelCode: string) {
+  setModel(modelCode?: string | null) {
     if (modelCode === this._selectedModel()?.code) return;
 
     const model = this.carModels.find((m) => m.code === modelCode) || null;
@@ -65,6 +66,8 @@ export class ConfigurationService {
     const color = this.carColors()!.find((c) => c.code === colorCode) || null;
 
     this._selectedColor.set(color);
+
+    this.loadAvailableOptions();
   }
 
   updateSelectedOptions(options: SelectedCarOptions[]) {}
@@ -73,6 +76,16 @@ export class ConfigurationService {
     if (this.carModels.length > 0) return;
 
     this.carModels = await firstValueFrom(this.http.get<CarModel[]>('/models'));
+  }
+
+  setConfiguration(configId: number) {
+    if (configId === this._selectedCarConfiguration()?.id) return;
+
+    const config = this._avaialableOptions()?.configs.find(
+      (c) => c.id === configId
+    );
+
+    this._selectedCarConfiguration.set(config!);
   }
 
   async loadAvailableOptions() {
@@ -84,5 +97,13 @@ export class ConfigurationService {
     const endpoint = '/options/' + this._selectedModel()!.code;
     const options = await firstValueFrom(this.http.get<CarOptions>(endpoint));
     this._avaialableOptions.set(options);
+  }
+
+  toggleTowHitch() {
+    this.hasTowHitch.set(!this.hasTowHitch());
+  }
+
+  toggleYoke() {
+    this.hasYoke.set(!this.hasYoke());
   }
 }

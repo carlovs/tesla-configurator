@@ -4,13 +4,14 @@ import { CarDisplayComponent } from '../car-display/car-display.component';
 import { CarColor, CarModel } from '../models/car-model.models';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ConfigurationNavComponent } from '../configuration-nav/configuration-nav.component';
 
 @Component({
   selector: 'app-car-select',
   templateUrl: './car-select.component.html',
   styleUrl: './car-select.component.css',
   standalone: true,
-  imports: [CarDisplayComponent, CommonModule, FormsModule],
+  imports: [CarDisplayComponent, CommonModule, FormsModule, ConfigurationNavComponent],
 })
 export class CarSelectComponent {
   protected cars: CarModel[] = [];

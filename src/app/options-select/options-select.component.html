@@ -1,28 +1,51 @@
 <h1>Step 2: Choose your config and options</h1>
 
-<div class="d-grid gap-2">
-  <div class="d-flex align-items-center gap-2">
-    <div>Config:</div>
-    <div>
-      <select id="configSelect">
-        <option>Model 3</option>
-      </select>
+<div *ngIf="availableOptions() !== null && hasSelectedModel(); else noModelSelection">
+  <div class="d-grid gap-2">
+    <div class="d-flex align-items-center gap-2">
+      <div>Config:</div>
+      <div>
+        <select id="configSelect" [ngModel]="selectedCarConfiguration()?.id" (change)="selectConfig($event)">
+          <option value="">Select Below</option>
+          <option *ngFor="let config of availableOptions()?.configs" [value]="config.id">{{ config.description }}</option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="selectedCarConfiguration() !== null">
+    Range: {{ selectedCarConfiguration()?.range }} 
+    - Max Speed: {{selectedCarConfiguration()?.speed}}
+    - Cost: {{selectedCarConfiguration()?.price | currency}}
+    
+    </div>
+    <div
+      *ngIf="availableOptions()?.towHitch"
+      class="d-flex align-items-center gap-2"
+    >
+      <div>Tow Hitch?</div>
+      <input type="checkbox" id="includeTow" 
+      [checked]="hasTowHitch()"
+      (change)="toggleTowHitch($event)" />
+    </div>
+    <div
+      *ngIf="availableOptions()?.yoke"
+      class="d-flex align-items-center gap-2"
+    >
+      <div>Yoke Steering Wheel?</div>
+      <input type="checkbox" id="includeYoke"
+      [checked]="hasYoke()"
+      (change)="toggleYoke($event)"
+      />
     </div>
   </div>
-  <div>{{ carModel?.description }}</div>
-  <div
-    *ngIf="availableOptions()?.towHitch"
-    class="d-flex align-items-center gap-2"
-  >
-    <div>Tow Hitch?</div>
-    <input type="checkbox" id="includeTow" />
-  </div>
-  <div *ngIf="availableOptions()?.code" class="d-flex align-items-center gap-2">
-    <div>Yoke Steering Wheel?</div>
-    <input type="checkbox" id="includeYoke" />
+
+  <div>
+    <app-car-display></app-car-display>
   </div>
 </div>
 
-<div>
-  <app-car-display></app-car-display>
-</div>
+<ng-template #noModelSelection>
+  <div>
+    <h2>No model selected</h2>
+    <p>Please go back to <a [routerLink]="'/'">Step 1</a> to select a model</p>
+  </div>
+</ng-template>

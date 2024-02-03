@@ -1,0 +1,7 @@
+.selectable{
+    cursor: pointer;
+}
+
+.disabled{
+    cursor: not-allowed;
+}
