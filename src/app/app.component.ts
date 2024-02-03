@@ -5,7 +5,6 @@ import { firstValueFrom } from 'rxjs';
 import { ConfigurationNavComponent } from './configuration-nav/configuration-nav.component';
 import { RouterLink, RouterModule } from '@angular/router';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,7 +18,9 @@ import { RouterLink, RouterModule } from '@angular/router';
   ],
   template: `
     <app-configuration-nav></app-configuration-nav>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   `,
 })
 export class AppComponent {

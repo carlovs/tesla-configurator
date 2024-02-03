@@ -3,24 +3,24 @@
 <div class="d-flex align-items-center gap-2">
   <div>Model:</div>
   <div>
-    <select id="modelSelect">
-      <option>Model 3</option>
+    <select id="modelSelect" [ngModel]="selectedModel()?.code" (change)="modelSelected($event)">
+        <option value="">Select Model</option>
+        <option *ngFor="let car of cars" [value]="car.code">{{car.description}}</option>
+      
     </select>
   </div>
   <div>Color:</div>
   <div>
-    <select id="colorSelect">
-      <option>Deep Blue Metallic</option>
+    <select id="colorSelect" [ngModel]="selectedColor()?.code" (change)="colorSelected($event)">
+      <option *ngFor="let color of colors()" [value]="color.code">{{color.description}}</option>
     </select>
   </div>
 </div>
 
 
 
-<div class="">
+<div class="text-center">
 
-  <app-car-display [car-model]="selectedModel()"></app-car-display>
-
-  
+  <app-car-display></app-car-display>
 
 </div>

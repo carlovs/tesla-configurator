@@ -1,1 +1,9 @@
-<img src="/assets/images/3/blue.jpg" />
+<div *ngIf="hasSelectedModel(); else noSelection">
+  <img
+    src="/assets/images/{{ selectedModel()?.code }}/{{ selectedColor()?.code }}.jpg"
+  />
+</div>
+
+<ng-template #noSelection>
+  <h3>Please select a model and color</h3>
+</ng-template>
