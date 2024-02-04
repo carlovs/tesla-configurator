@@ -1,13 +1,14 @@
 import { Component, effect } from '@angular/core';
 import { ConfigurationService } from '../services/configuration.service';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-configuration-nav',
   templateUrl: './configuration-nav.component.html',
   styleUrl: './configuration-nav.component.css',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
 })
 export class ConfigurationNavComponent {
   protected hasSelectedModel = this.configService.hasSelectedModel;

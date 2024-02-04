@@ -1,13 +1,43 @@
 <div class="d-flex">
-  <div [routerLink]="['/']"
-       class="p-3 flex-fill border border-1 text-center selectable"
-       id="step1">Step 1</div>
-       
-  <div [routerLink]="['/configuration', selectedModel()?.code]"
-       class="p-3 flex-fill border border-1 text-center"
-       id="step2" [class]="hasSelectedModel() === false ? 'bg-light disabled' : 'selectable'">Step 2</div>
-  <div [routerLink]="['/summary']"
-       class="p-3 flex-fill border border-1 text-center"
-       [class]="hasOptions() === false ? 'bg-light disabled' : 'selectable'"
-       id="step3">Step 3</div>
+  <div
+    [routerLink]="['/']"
+    class="p-3 flex-fill border border-1 text-center selectable"
+    id="step1"
+  >
+    Step 1
+  </div>
+
+  <div
+    *ngIf="hasSelectedModel() === false; else step2Enabled"
+    class="p-3 flex-fill border border-1 text-center bg-light disabled"
+    id="step2"
+  >
+    Step 2
+  </div>
+  <ng-template #step2Enabled>
+    <div
+      [routerLink]="['/configuration', selectedModel()?.code]"
+      class="p-3 flex-fill border border-1 text-center selectable"
+      id="step2"
+    >
+      Step 2
+    </div>
+  </ng-template>
+
+  <div
+    *ngIf="hasOptions() === false; else step3Enabled"
+    class="p-3 flex-fill border border-1 text-center bg-light disabled"
+    id="step3"
+  >
+    Step 3
+  </div>
+  <ng-template #step3Enabled>
+    <div
+      [routerLink]="['/summary']"
+      class="p-3 flex-fill border border-1 text-center selectable"
+      id="step3"
+    >
+      Step 3
+    </div>
+  </ng-template>
 </div>

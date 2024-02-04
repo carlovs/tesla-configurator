@@ -50,18 +50,12 @@ export class ConfigurationService {
 
     this._carColors.set(model?.colors!);
 
-    if (model?.colors.length !== 0) {
-      this._selectedColor.set(model?.colors[0]!);
-    } else {
-      this._selectedColor.set(null);
-    }
+    this.setColor(model?.colors[0].code!);
 
     this._selectedCarConfiguration.set(null);
   }
 
-  setColor(colorCode: string) {
-    if (colorCode === this._selectedColor()?.code) return;
-
+  setColor(colorCode?: string | null) {
     if (this.carColors === null) return;
 
     const color = this.carColors()!.find((c) => c.code === colorCode) || null;
@@ -108,25 +102,29 @@ export class ConfigurationService {
     this.hasYoke.set(!this.hasYoke());
   }
 
-  getCostSummary(): CostSummary{
+  getCostSummary(): CostSummary {
     const costSummary = new CostSummary();
-    
+
     costSummary.modelName = this.selectedModel()?.description || '';
-    costSummary.configuration = this.selectedCarConfiguration()?.description || '';
+    costSummary.configuration =
+      this.selectedCarConfiguration()?.description || '';
     costSummary.configurationCost = this.selectedCarConfiguration()?.price || 0;
-    costSummary.configurationDescription = `Range: ${this._selectedCarConfiguration()?.range} - Max Speed: ${this._selectedCarConfiguration()?.speed}`;
+    costSummary.configurationDescription = `Range: ${
+      this._selectedCarConfiguration()?.range
+    } - Max Speed: ${this._selectedCarConfiguration()?.speed}`;
     costSummary.color = this.selectedColor()?.description || '';
     costSummary.colorCost = this.selectedColor()?.price || 0;
-    
-    
+
     costSummary.hasTowHitch = this.hasTowHitch();
     costSummary.hasYoke = this.hasYoke();
-    
-    costSummary.totalCost = costSummary.configurationCost + costSummary.colorCost;
 
-    costSummary.totalCost += costSummary.hasTowHitch ? costSummary.towHitchCost : 0;
+    costSummary.totalCost =
+      costSummary.configurationCost + costSummary.colorCost;
+
+    costSummary.totalCost += costSummary.hasTowHitch
+      ? costSummary.towHitchCost
+      : 0;
     costSummary.totalCost += costSummary.hasYoke ? costSummary.yokeCost : 0;
-
 
     return costSummary;
   }
