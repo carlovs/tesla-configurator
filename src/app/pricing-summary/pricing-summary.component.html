@@ -1,32 +1,51 @@
 <h1>Step 3: Summary</h1>
-<h2>Your //ModelName//</h2>
-<div class="d-grid gap-2">
-  <table class="table table-sm">
-    <tbody>
-      <tr>
-        <td><strong>//Selected model</strong></td>
-        <td class="text-end">$//formated us dollars</td>
-      </tr>
-      <tr>
-        <td>//model description</td>
-        <td class="text-end"></td>
-      </tr>
-      <tr>
-        <td><strong>//color</strong></td>
-        <td class="text-end">$//formated us dollars</td>
-      </tr>
-      <tr>
-        <td><strong>//options</strong></td>
-        <td class="text-end">$//formated us dollars</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td><strong>TOTAL COST</strong></td>
-        <td class="text-end">$//formated us dollars</td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+<div *ngIf="hasConfiguration(); else noSummary">
+  <h2>Your {{ costSummary.modelName }}</h2>
+  <div class="d-grid gap-2">
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <td>
+            <strong>{{ costSummary.configurationDescription }}</strong>
+          </td>
+          <td class="text-end">
+            {{ costSummary.configurationCost | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td>{{ costSummary.configurationDescription }}</td>
+          <td class="text-end"></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>{{ costSummary.color }}</strong>
+          </td>
+          <td class="text-end">{{ costSummary.colorCost | currency }}</td>
+        </tr>
+        <tr *ngIf="costSummary.hasTowHitch">
+          <td>
+            <strong>{{ costSummary.towHitchDescription }}</strong>
+          </td>
+          <td class="text-end">{{ costSummary.towHitchCost | currency }}</td>
+        </tr>
+        <tr *ngIf="costSummary.hasYoke">
+          <td>
+            <strong>{{ costSummary.yokeDescription }}</strong>
+          </td>
+          <td class="text-end">{{ costSummary.yokeCost | currency }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>TOTAL COST</strong></td>
+          <td class="text-end">{{ costSummary.totalCost | currency }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-<app-car-display></app-car-display>
+  <app-car-display></app-car-display>
+</div>
+<ng-template #noSummary>
+  <h2>Select a <a [routerLink]="'/'">model</a> before viewing the summary.</h2>
+</ng-template>

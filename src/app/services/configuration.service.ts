@@ -8,6 +8,7 @@ import {
   SelectedCarOptions,
 } from '../models/car-options.model';
 import { FormRecord } from '@angular/forms';
+import { CostSummary } from './cost-summary.models';
 
 @Injectable()
 export class ConfigurationService {
@@ -55,7 +56,7 @@ export class ConfigurationService {
       this._selectedColor.set(null);
     }
 
-    this._selectedOptions.set(null);
+    this._selectedCarConfiguration.set(null);
   }
 
   setColor(colorCode: string) {
@@ -105,5 +106,28 @@ export class ConfigurationService {
 
   toggleYoke() {
     this.hasYoke.set(!this.hasYoke());
+  }
+
+  getCostSummary(): CostSummary{
+    const costSummary = new CostSummary();
+    
+    costSummary.modelName = this.selectedModel()?.description || '';
+    costSummary.configuration = this.selectedCarConfiguration()?.description || '';
+    costSummary.configurationCost = this.selectedCarConfiguration()?.price || 0;
+    costSummary.configurationDescription = `Range: ${this._selectedCarConfiguration()?.range} - Max Speed: ${this._selectedCarConfiguration()?.speed}`;
+    costSummary.color = this.selectedColor()?.description || '';
+    costSummary.colorCost = this.selectedColor()?.price || 0;
+    
+    
+    costSummary.hasTowHitch = this.hasTowHitch();
+    costSummary.hasYoke = this.hasYoke();
+    
+    costSummary.totalCost = costSummary.configurationCost + costSummary.colorCost;
+
+    costSummary.totalCost += costSummary.hasTowHitch ? costSummary.towHitchCost : 0;
+    costSummary.totalCost += costSummary.hasYoke ? costSummary.yokeCost : 0;
+
+
+    return costSummary;
   }
 }
