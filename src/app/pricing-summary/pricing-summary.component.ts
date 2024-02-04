@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfigurationService } from '../services/configuration.service';
 import { CarDisplayComponent } from '../car-display/car-display.component';
-import { CostSummary } from '../services/cost-summary.models';
+import { CostSummary } from '../models/cost-summary.models';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 

@@ -9,7 +9,7 @@
       [ngModel]="selectedModel()?.code"
       (change)="modelSelected($event)"
     >
-      <option value="">Select Model</option>
+      <option [value]="null">Select Model</option>
       <option *ngFor="let car of cars" [value]="car.code">
         {{ car.description }}
       </option>

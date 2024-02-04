@@ -8,7 +8,7 @@ import {
   SelectedCarOptions,
 } from '../models/car-options.model';
 import { FormRecord } from '@angular/forms';
-import { CostSummary } from './cost-summary.models';
+import { CostSummary } from '../models/cost-summary.models';
 
 @Injectable()
 export class ConfigurationService {
@@ -42,7 +42,6 @@ export class ConfigurationService {
   constructor(private http: HttpClient) {}
 
   setModel(modelCode?: string | null) {
-    if (modelCode === this._selectedModel()?.code) return;
 
     const model = this.carModels.find((m) => m.code === modelCode) || null;
 
@@ -56,10 +55,12 @@ export class ConfigurationService {
   }
 
   setColor(colorCode?: string | null) {
-    if (this.carColors === null) return;
+    let color: CarColor | null = null;
 
-    const color = this.carColors()!.find((c) => c.code === colorCode) || null;
-
+    if (colorCode) {
+      color = this.carColors()!.find((c) => c.code === colorCode) || null;
+    }
+      
     this._selectedColor.set(color);
 
     this.loadAvailableOptions();
@@ -84,7 +85,7 @@ export class ConfigurationService {
   }
 
   async loadAvailableOptions() {
-    if (!this._selectedModel || this.selectedModel()?.code.length === 0) {
+    if (!(this._selectedModel()) || this.selectedModel()?.code.length === 0) {
       this._avaialableOptions.set(null);
       return;
     }

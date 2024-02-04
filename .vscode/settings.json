@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3b2a5c24-b2fa-4cb6-80a1-a16d42d709c9/resourceGroups/Dev/providers/Microsoft.Web/sites/ngCarConfigurator",
+    "appService.deploySubpath": "dist"
+}

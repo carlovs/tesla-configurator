@@ -6,7 +6,7 @@
       <div>Config:</div>
       <div>
         <select id="configSelect" [ngModel]="selectedCarConfiguration()?.id" (change)="selectConfig($event)">
-          <option value="">Select Below</option>
+          <option [value]="null">Select Below</option>
           <option *ngFor="let config of availableOptions()?.configs" [value]="config.id">{{ config.description }}</option>
         </select>
       </div>
